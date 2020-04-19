@@ -1,5 +1,5 @@
 body {
-    margin: 0px;
+    margin: 0;
 }
 
 #app {
@@ -44,4 +44,28 @@ body {
 
 .clickable.highlight {
     filter: brightness(105%);
+}
+
+@media screen and (max-width: 800px) and (orientation: landscape) {
+    body {
+        margin: 1em;
+    }
+
+    #app {
+        flex-direction: row;
+        row-gap: 0;
+        column-gap: 1em;
+    }
+
+    .grid {
+        grid-template-columns: repeat(24, 5vh);
+    }
+
+    .cell {
+        min-height: 5vh;
+        max-height: 5vh;
+    
+        font-size: 0.7rem;
+        text-overflow: clip;
+    }
 }
