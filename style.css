@@ -1,0 +1,46 @@
+body {
+    margin: 0px;
+}
+
+#app {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 24px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(24, 24px);
+}
+
+.cell {
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px dotted lightblue;
+    min-height: 24px;
+    max-height: 24px;
+    user-select: none;
+    font-weight: bold;
+}
+:not(.hidden):not(.bomb).cell:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.hidden {
+    transition: background-color 1s ease;
+    background-color: rgb(223, 238, 243);
+}
+.hidden:hover {
+    filter: brightness(105%);
+}
+
+.bomb {
+    background-color: rgb(255, 215, 215);
+}
