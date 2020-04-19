@@ -33,8 +33,8 @@ const explode = function() {
 
     return (el) => {
         const rect = el.getBoundingClientRect();
-        const x = rect.left + window.scrollX;
-        const y = rect.top + window.scrollY;
+        const x = rect.left + window.scrollX + (rect.width / 2);
+        const y = rect.top + window.scrollY + (rect.height / 2);
 
         let particles = [];
         let ratio = window.devicePixelRatio;
