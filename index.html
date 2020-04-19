@@ -16,6 +16,7 @@
                 v-bind:style="{ color: cell.flagged ? 'red' : cell.color }"
                 v-on:click="reveal(cell)"
                 v-on:click.right="flag(cell, $event)"
+                v-on:click.dblclick="revealSurroundings(cell, $event)"
                 v-on:click.middle="revealSurroundings(cell, $event)"
                 v-on:mousedown.middle="toggleHighlight(true, cell, $event)"
                 v-on:mouseleave="highlight(cell, false)"
