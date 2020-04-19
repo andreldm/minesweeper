@@ -56,12 +56,12 @@ var app = new Vue({
         this.reset();
     },
     methods: {
-        mark: function(cell, event) {
+        flag: function(cell, event) {
             event.preventDefault();
-            if (!this.gameOver && !cell.visible) cell.marked = !cell.marked;
+            if (!this.gameOver && !cell.visible) cell.flagged = !cell.flagged;
         },
         render: function(cell) {
-            if (cell.marked) return '&#9873;';
+            if (cell.flagged) return '&#9873;';
             if (!cell.visible || cell.value == 0) return '';
             if (cell.value == 'X') return '&#128163;';
             return cell.value;
@@ -69,7 +69,7 @@ var app = new Vue({
         reveal: function(cell) {
             if (this.gameOver || cell.visible) return;
 
-            cell.marked = false;
+            cell.flagged = false;
             cell.visible = true;
 
             if (cell.value == 'X') {
@@ -80,7 +80,7 @@ var app = new Vue({
                 this.cells
                     .filter(c => c.value == 'X' && !c.visible)
                     .forEach(c => setTimeout(()=> {
-                        c.marked = false;
+                        c.flagged = false;
                         c.visible = true;
                         explode(grid.childNodes[c.index]);
                     }, randomInt (500, 7500)));
@@ -101,9 +101,9 @@ var app = new Vue({
 
             const surroundings = getSurroundings(this.cells, cell.index);
 
-            if (surroundings.filter(c => c.marked).length == cell.value) {
+            if (surroundings.filter(c => c.flagged).length == cell.value) {
                 surroundings
-                    .filter(c => !c.marked)
+                    .filter(c => !c.flagged)
                     .sort((a, b) => a.value.toString() > b.value.toString())
                     .forEach(c => this.reveal(c));
             }
@@ -128,7 +128,7 @@ var app = new Vue({
                     index: i,
                     color: 'default',
                     value: mines.has(i) ? 'X' : 0,
-                    marked: false,
+                    flagged: false,
                     visible: false
                 });
             }
