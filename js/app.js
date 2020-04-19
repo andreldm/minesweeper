@@ -67,7 +67,7 @@ var app = new Vue({
             return cell.value;
         },
         reveal: function(cell) {
-            if (this.gameOver || cell.visible) return;
+            if (this.gameOver || cell.visible || cell.flagged) return;
 
             cell.flagged = false;
             cell.visible = true;
