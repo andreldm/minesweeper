@@ -37,10 +37,11 @@ body {
     transition: background-color 1s ease;
     background-color: rgb(223, 238, 243);
 }
-.hidden:hover {
-    filter: brightness(105%);
-}
 
 .bomb {
     background-color: rgb(255, 215, 215);
+}
+
+.clickable.highlight {
+    filter: brightness(105%);
 }

@@ -7,16 +7,19 @@
     <title>Minesweeper</title>
 </head>
 <body>
-    <div id="app">
+    <div id="app" v-on:mouseup.middle="toggleHighlight(false, undefined, $event)">
         <div class="grid">
             <div
                 class="cell"
                 v-for="cell in cells"
-                v-bind:class="{ clickable: !cell.visible && !cell.flagged && !gameOver, hidden: !cell.visible, bomb: cell.visible && cell.value == 'X' }"
+                v-bind:class="{ highlight: cell.highlight, clickable: !cell.visible && !cell.flagged && !gameOver, hidden: !cell.visible, bomb: cell.visible && cell.value == 'X' }"
                 v-bind:style="{ color: cell.flagged ? 'red' : cell.color }"
                 v-on:click="reveal(cell)"
                 v-on:click.right="flag(cell, $event)"
                 v-on:click.middle="revealSurroundings(cell, $event)"
+                v-on:mousedown.middle="toggleHighlight(true, cell, $event)"
+                v-on:mouseleave="highlight(cell, false)"
+                v-on:mouseenter="highlight(cell, true)"
                 v-html="render(cell)">
             </div>
         </div>

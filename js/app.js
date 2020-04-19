@@ -49,6 +49,7 @@ function getSurroundings(cells, i) {
 var app = new Vue({
     el: '#app',
     data: {
+        highlightEnabled: false,
         gameOver: false,
         cells: []
     },
@@ -56,6 +57,23 @@ var app = new Vue({
         this.reset();
     },
     methods: {
+        toggleHighlight: function(value, cell, event) {
+            event.preventDefault();
+            if (this.highlightEnabled == value || this.gameOver) return;
+
+            if (this.highlightEnabled = value) {
+                this.highlight (cell, true);
+            } else {
+                this.cells.forEach(c => c.highlight = false);
+            }
+        },
+        highlight: function(cell, value) {
+            cell.highlight = value;
+
+            if (this.highlightEnabled)
+                getSurroundings(this.cells, cell.index)
+                    .forEach(c => c.highlight = value);
+        },
         flag: function(cell, event) {
             event.preventDefault();
             if (!this.gameOver && !cell.visible) cell.flagged = !cell.flagged;
@@ -128,6 +146,7 @@ var app = new Vue({
                     index: i,
                     color: 'default',
                     value: mines.has(i) ? 'X' : 0,
+                    highlight: false,
                     flagged: false,
                     visible: false
                 });
