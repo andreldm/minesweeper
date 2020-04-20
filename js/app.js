@@ -51,6 +51,7 @@ var app = new Vue({
     data: {
         highlightEnabled: false,
         gameOver: false,
+        minesLeft: MINES,
         cells: []
     },
     created: function () {
@@ -76,7 +77,10 @@ var app = new Vue({
         },
         flag: function(cell, event) {
             event.preventDefault();
-            if (!this.gameOver && !cell.visible) cell.flagged = !cell.flagged;
+            if (!this.gameOver && !cell.visible) {
+                cell.flagged = !cell.flagged;
+                this.minesLeft += cell.flagged ? -1 : 1;
+            };
         },
         render: function(cell) {
             if (cell.flagged) return '&#9873;';
@@ -134,6 +138,7 @@ var app = new Vue({
                 .forEach(e => document.body.removeChild(e));
 
             this.gameOver = false;
+            this.minesLeft = MINES;
             this.cells = [];
             let mines = new Set();
 
