@@ -2,6 +2,19 @@ body {
     margin: 0;
 }
 
+#instructions {
+    display: none;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#instructions img {
+    width: 80vw;
+    height: 50vh;
+}
+
 #app {
     height: 100vh;
     display: flex;
@@ -53,6 +66,16 @@ body {
 
 .reset {
     margin: 1em;
+}
+
+@media screen and (max-width: 800px) and (orientation: portrait) {
+    #app {
+        display: none;
+    }
+
+    #instructions {
+        display: flex;
+    }
 }
 
 @media screen and (max-width: 800px) and (orientation: landscape) {
