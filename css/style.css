@@ -8,11 +8,12 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    font-family: system;
+    color: #4d4d4d;
 }
 
 #instructions img {
     width: 80vw;
-    height: 50vh;
 }
 
 #app {
