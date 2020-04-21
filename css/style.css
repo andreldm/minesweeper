@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    font-family: system;
 }
 
 #instructions {
@@ -8,7 +9,6 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    font-family: system;
     color: #4d4d4d;
 }
 
@@ -67,6 +67,20 @@ body {
 
 .reset {
     margin: 1em;
+    background-color: #007dc1;
+    border: 1px solid #176599;
+    cursor: pointer;
+    color: #fff;
+    padding: 4px 16px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #154682;
+}
+.reset:active {
+    position: relative;
+    top: 1px;
+}
+.reset::-moz-focus-inner {
+    border: none;
 }
 
 @media screen and (max-width: 800px) and (orientation: portrait) {

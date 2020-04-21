@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="controls">
-            <div class="mine-counter">Mines left: {{ minesLeft }}</div>
+            <div class="mine-counter">{{ Math.max(minesLeft, 0) }} mine{{ minesLeft == 1 ? '' : 's' }} left</div>
             <button class="reset" v-on:click="reset">Reset</button>
         </div>
     </div>
