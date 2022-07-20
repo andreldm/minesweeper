@@ -126,3 +126,7 @@ body {
         margin: 0 0 0 .5em;
     }
 }
+
+[v-cloak] {
+    display: none !important;
+}

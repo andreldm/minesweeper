@@ -15,7 +15,7 @@
         <img src="images/landscape.svg" alt="Turn to device to landscape">
         <h2>Please turn your device</h2>
     </div>
-    <div id="app">
+    <div id="app" v-cloak>
         <div class="grid"
              v-on:mouseup.middle="toggleHighlight(false, undefined, $event)"
              v-on:mouseleave="toggleHighlight(false, undefined, $event)">
