@@ -16,7 +16,9 @@
         <h2>Please turn your device</h2>
     </div>
     <div id="app">
-        <div class="grid" v-on:mouseup.middle="toggleHighlight(false, undefined, $event)">
+        <div class="grid"
+             v-on:mouseup.middle="toggleHighlight(false, undefined, $event)"
+             v-on:mouseleave="toggleHighlight(false, undefined, $event)">
             <div
                 class="cell"
                 v-for="cell in cells"
