@@ -27,12 +27,17 @@ body {
 .grid {
     display: grid;
     grid-template-columns: repeat(24, 24px);
+    border-width: 0 2px 2px 0;
+    border-style: solid;
+    border-color: lightblue;
 }
 
 .cell {
     text-align: center;
     box-sizing: border-box;
-    border: 1px dotted lightblue;
+    border-width: 2px 0 0 2px;
+    border-style: solid;
+    border-color: lightblue;
     min-height: 24px;
     max-height: 24px;
     user-select: none;
