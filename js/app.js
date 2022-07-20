@@ -46,19 +46,20 @@ function getSurroundings(cells, i) {
     return surroundings;
 }
 
-new Vue({
-    el: '#app',
-    data: {
-        highlightEnabled: false,
-        gameOver: false,
-        minesLeft: MINES,
-        cells: []
+const app = Vue.createApp({
+    data() {
+        return {
+            highlightEnabled: false,
+            gameOver: false,
+            minesLeft: MINES,
+            cells: []
+        }
     },
-    created: function () {
+    mounted() {
         this.reset();
     },
     methods: {
-        toggleHighlight: function(value, cell, event) {
+        toggleHighlight(value, cell, event) {
             event.preventDefault();
             if (this.highlightEnabled == value || this.gameOver) return;
 
@@ -68,27 +69,27 @@ new Vue({
                 this.cells.forEach(c => c.highlight = false);
             }
         },
-        highlight: function(cell, value) {
+        highlight(cell, value) {
             cell.highlight = value;
 
             if (this.highlightEnabled)
                 getSurroundings(this.cells, cell.index)
                     .forEach(c => c.highlight = value);
         },
-        flag: function(cell, event) {
+        flag(cell, event) {
             event.preventDefault();
             if (!this.gameOver && !cell.visible) {
                 cell.flagged = !cell.flagged;
                 this.minesLeft += cell.flagged ? -1 : 1;
             };
         },
-        render: function(cell) {
+        render(cell) {
             if (cell.flagged) return '&#9873;';
             if (!cell.visible || cell.value == 0) return '';
             if (cell.value == 'X') return '&#128163;';
             return cell.value;
         },
-        reveal: function(cell) {
+        reveal(cell) {
             if (this.gameOver || cell.visible || cell.flagged) return;
 
             if (cell.value == -1)
@@ -119,7 +120,7 @@ new Vue({
                     .forEach(c => this.reveal(c));
             }
         },
-        revealSurroundings: function(cell, event) {
+        revealSurroundings(cell, event) {
             event.preventDefault();
 
             if (!cell.visible || cell.value == 'x' || cell.value == 0) return;
@@ -133,7 +134,7 @@ new Vue({
                     .forEach(c => this.reveal(c));
             }
         },
-        plantMines: function(selectedCellIndex) {
+        plantMines(selectedCellIndex) {
             const mines = new Set();
 
             while (mines.size < MINES) {
@@ -154,7 +155,7 @@ new Vue({
                 this.cells[i].color = getColor(this.cells[i].value);
             }
         },
-        reset: function() {
+        reset() {
             const highestTimeoutId = setTimeout(";");
             for (let i = 0; i < highestTimeoutId; i++) clearTimeout(i);
 
@@ -178,3 +179,5 @@ new Vue({
         }
     }
 });
+
+app.mount('#app');
