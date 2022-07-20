@@ -46,7 +46,7 @@ function getSurroundings(cells, i) {
     return surroundings;
 }
 
-var app = new Vue({
+new Vue({
     el: '#app',
     data: {
         highlightEnabled: false,
@@ -91,6 +91,9 @@ var app = new Vue({
         reveal: function(cell) {
             if (this.gameOver || cell.visible || cell.flagged) return;
 
+            if (cell.value == -1)
+                this.plantMines(cell.index);
+
             cell.flagged = false;
             cell.visible = true;
 
@@ -130,31 +133,15 @@ var app = new Vue({
                     .forEach(c => this.reveal(c));
             }
         },
-        reset: function() {
-            const highestTimeoutId = setTimeout(";");
-            for (let i = 0; i < highestTimeoutId; i++) clearTimeout(i);
-
-            Array.from(document.getElementsByTagName('canvas'))
-                .forEach(e => document.body.removeChild(e));
-
-            this.gameOver = false;
-            this.minesLeft = MINES;
-            this.cells = [];
-            let mines = new Set();
+        plantMines: function(selectedCellIndex) {
+            const mines = new Set();
 
             while (mines.size < MINES) {
-                mines.add(randomInt(0, SIZE));
-            }
-
-            for (let i = 0; i < SIZE; i++) {
-                this.cells.push({
-                    index: i,
-                    color: 'default',
-                    value: mines.has(i) ? 'X' : 0,
-                    highlight: false,
-                    flagged: false,
-                    visible: false
-                });
+                const i = randomInt(0, SIZE);
+                if (i == selectedCellIndex || mines.has(i))
+                    continue;
+                this.cells[i].value = 'X';
+                mines.add(i);
             }
 
             for (let i = 0; i < SIZE; i++) {
@@ -165,6 +152,28 @@ var app = new Vue({
                     .length;
 
                 this.cells[i].color = getColor(this.cells[i].value);
+            }
+        },
+        reset: function() {
+            const highestTimeoutId = setTimeout(";");
+            for (let i = 0; i < highestTimeoutId; i++) clearTimeout(i);
+
+            Array.from(document.getElementsByTagName('canvas'))
+                .forEach(e => document.body.removeChild(e));
+
+            this.gameOver = false;
+            this.minesLeft = MINES;
+            this.cells = [];
+
+            for (let i = 0; i < SIZE; i++) {
+                this.cells.push({
+                    index: i,
+                    color: 'default',
+                    value: -1,
+                    highlight: false,
+                    flagged: false,
+                    visible: false
+                });
             }
         }
     }
