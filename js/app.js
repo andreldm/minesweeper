@@ -1,13 +1,10 @@
 import explode from "./explosion.js";
+import {touchEventHandler, randomInt } from "./util.js";
 
 const W = 24;
 const H = 20;
 const SIZE = W * H;
 const MINES = 99;
-
-function randomInt(min, max) {
-    return Math.floor(Math.random() * (max - min) ) + min;
-}
 
 function getColor(value) {
     switch (value) {
@@ -175,6 +172,12 @@ const app = Vue.createApp({
                     visible: false
                 });
             }
+        },
+        touch(cell, event) {
+            touchEventHandler(event,
+                              () => this.reveal(cell),
+                              () => this.revealSurroundings(cell),
+                              () => this.flag(cell));
         }
     }
 });
