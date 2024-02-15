@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    font-family: system;
+    font-family: "helvetica neue", arial, system;
 }
 
 #instructions {
@@ -30,6 +30,8 @@ body {
     border-width: 0 2px 2px 0;
     border-style: solid;
     border-color: lightblue;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .cell {
@@ -40,10 +42,12 @@ body {
     border-color: lightblue;
     min-height: 24px;
     max-height: 24px;
+    line-height: 24px;
     user-select: none;
     font-weight: bold;
+    cursor: default;
 }
-:not(.hidden):not(.bomb).cell:hover {
+.cell.clickable.hidden:hover {
     background-color: rgb(245, 245, 245);
 }
 
@@ -52,12 +56,12 @@ body {
 }
 
 .hidden {
-    transition: background-color 1s ease;
     background-color: rgb(223, 238, 243);
 }
 
 .bomb {
     background-color: rgb(255, 215, 215);
+    font-size: 12px;
 }
 
 .clickable.highlight {
@@ -117,7 +121,7 @@ body {
     .cell {
         min-height: 5vh;
         max-height: 5vh;
-    
+        line-height: 5vh;
         font-size: 0.7rem;
         text-overflow: clip;
     }

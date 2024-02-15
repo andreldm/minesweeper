@@ -59,8 +59,7 @@ const app = Vue.createApp({
         this.reset();
     },
     methods: {
-        toggleHighlight(value, cell, event) {
-            event.preventDefault();
+        toggleHighlight(value, cell) {
             if (this.highlightEnabled == value || this.gameOver) return;
 
             if (this.highlightEnabled = value) {
@@ -70,14 +69,15 @@ const app = Vue.createApp({
             }
         },
         highlight(cell, value) {
+            if (this.gameOver) return;
+
             cell.highlight = value;
 
             if (this.highlightEnabled)
                 getSurroundings(this.cells, cell.index)
                     .forEach(c => c.highlight = value);
         },
-        flag(cell, event) {
-            event.preventDefault();
+        flag(cell) {
             if (!this.gameOver && !cell.visible) {
                 cell.flagged = !cell.flagged;
                 this.minesLeft += cell.flagged ? -1 : 1;
@@ -120,9 +120,7 @@ const app = Vue.createApp({
                     .forEach(c => this.reveal(c));
             }
         },
-        revealSurroundings(cell, event) {
-            event.preventDefault();
-
+        revealSurroundings(cell) {
             if (!cell.visible || cell.value == 'x' || cell.value == 0) return;
 
             const surroundings = getSurroundings(this.cells, cell.index);
@@ -162,6 +160,7 @@ const app = Vue.createApp({
             Array.from(document.getElementsByTagName('canvas'))
                 .forEach(e => document.body.removeChild(e));
 
+            this.highlightEnabled = false;
             this.gameOver = false;
             this.minesLeft = MINES;
             this.cells = [];

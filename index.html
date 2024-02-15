@@ -17,18 +17,18 @@
     </div>
     <div id="app" v-cloak>
         <div class="grid"
-             v-on:mouseup.middle="toggleHighlight(false, undefined, $event)"
-             v-on:mouseleave="toggleHighlight(false, undefined, $event)">
+             v-on:mouseup.middle="toggleHighlight(false, undefined)"
+             v-on:mouseleave="toggleHighlight(false, undefined)">
             <div
                 class="cell"
                 v-for="cell in cells"
                 v-bind:class="{ highlight: cell.highlight, clickable: !cell.visible && !cell.flagged && !gameOver, hidden: !cell.visible, bomb: cell.visible && cell.value == 'X' }"
                 v-bind:style="{ color: cell.flagged ? 'red' : cell.color }"
-                v-on:click="reveal(cell)"
-                v-on:click.right="flag(cell, $event)"
-                v-on:dblclick="revealSurroundings(cell, $event)"
-                v-on:click.middle="revealSurroundings(cell, $event)"
-                v-on:mousedown.middle="toggleHighlight(true, cell, $event)"
+                v-on:click.left.prevent="reveal(cell)"
+                v-on:contextmenu.prevent="flag(cell)"
+                v-on:dblclick.prevent="revealSurroundings(cell)"
+                v-on:click.middle.prevent="revealSurroundings(cell)"
+                v-on:mousedown.middle.prevent="toggleHighlight(true, cell)"
                 v-on:mouseleave="highlight(cell, false)"
                 v-on:mouseenter="highlight(cell, true)"
                 v-html="render(cell)">
