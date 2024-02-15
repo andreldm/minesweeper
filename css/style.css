@@ -26,7 +26,9 @@ body {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(24, 24px);
+    grid-template-columns: repeat(1, 24px);
+    grid-auto-rows: 24px;
+    box-sizing: border-box;
     border-width: 0 2px 2px 0;
     border-style: solid;
     border-color: lightblue;
@@ -46,9 +48,6 @@ body {
     user-select: none;
     font-weight: bold;
     cursor: default;
-}
-.cell.clickable.hidden:hover {
-    background-color: rgb(245, 245, 245);
 }
 
 .clickable {
@@ -72,10 +71,11 @@ body {
     margin: 1em 0 0 0;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
-.reset {
-    margin: 1em;
+.button {
+    margin: 1em .5em;
     background-color: #007dc1;
     border: 1px solid #176599;
     cursor: pointer;
@@ -84,12 +84,18 @@ body {
     text-decoration: none;
     text-shadow: 0px 1px 0px #154682;
 }
-.reset:active {
+.button:active {
     position: relative;
     top: 1px;
 }
-.reset::-moz-focus-inner {
+.button::-moz-focus-inner {
     border: none;
+}
+
+@media screen and (min-width: 801px) {
+    .cell.clickable.hidden:hover {
+        background-color: rgb(245, 245, 245);
+    }
 }
 
 @media screen and (max-width: 800px) and (orientation: portrait) {
@@ -115,7 +121,8 @@ body {
     }
 
     .grid {
-        grid-template-columns: repeat(24, 5vh);
+        grid-template-columns: repeat(1, 5vh);
+        grid-auto-rows: 5vh;
     }
 
     .cell {
@@ -128,6 +135,10 @@ body {
 
     .controls {
         margin: 0 0 0 .5em;
+    }
+
+    .mine-counter {
+        font-size: small;
     }
 }
 

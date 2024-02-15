@@ -16,34 +16,10 @@
         <h2>Please turn your device</h2>
     </div>
     <div id="app" v-cloak>
-        <div class="grid"
-             v-on:mouseup.middle="toggleHighlight(false, undefined)"
-             v-on:mouseleave="toggleHighlight(false, undefined)">
-            <div
-                class="cell"
-                v-for="cell in cells"
-                v-bind:class="{ highlight: cell.highlight, clickable: !cell.visible && !cell.flagged && !gameOver, hidden: !cell.visible, bomb: cell.visible && cell.value == 'X' }"
-                v-bind:style="{ color: cell.flagged ? 'red' : cell.color }"
-                v-on:click.left.prevent="reveal(cell)"
-                v-on:contextmenu.prevent="flag(cell)"
-                v-on:touchstart="touch(cell, $event)"
-                v-on:touchend="touch(cell, $event)"
-                v-on:touchmove="touch(cell, $event)"
-                v-on:touchcancel="touch(cell, $event)"
-                v-on:dblclick.prevent="revealSurroundings(cell)"
-                v-on:click.middle.prevent="revealSurroundings(cell)"
-                v-on:mousedown.middle.prevent="toggleHighlight(true, cell)"
-                v-on:mouseleave="highlight(cell, false)"
-                v-on:mouseenter="highlight(cell, true)"
-                v-html="render(cell)">
-            </div>
-        </div>
-        <div class="controls">
-            <div class="mine-counter">{{ Math.max(minesLeft, 0) }} mine{{ minesLeft == 1 ? '' : 's' }} left</div>
-            <button class="reset" v-on:click="reset">Reset</button>
-        </div>
+        <router-view></router-view>
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/vue-router@4/dist/vue-router.global.js"></script>
     <script type="module" src="js/app.js"></script>
     <script>
         window.onload = () => {
