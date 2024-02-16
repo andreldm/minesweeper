@@ -25,7 +25,10 @@ const TEMPLATE = `
     </div>
 </div>
 <div class="controls">
-    <div class="mine-counter">{{ Math.max(minesLeft, 0) }} mine{{ minesLeft == 1 ? '' : 's' }} left</div>
+    <div class="mine-counter" v-if="success">You won!</div>
+    <div class="mine-counter" v-if="gameOver">You lost!</div>
+    <div class="mine-counter" v-if="!success && !gameOver">{{ Math.max(minesLeft, 0) }} mine{{ minesLeft == 1 ? '' : 's' }} left</div>
+    <div class="time">{{ time }}</div>
     <div>
         <button class="button" v-on:click="reset">Reset</button>
         <button class="button" v-on:click="menu">Menu</button>
@@ -94,11 +97,14 @@ export default {
       return {
         highlightEnabled: false,
         gameOver: false,
+        success: false,
         minesLeft: 0,
         cells: [],
         width: 0,
         size: 0,
         mines: 0,
+        time: 0,
+        timeTimerId: undefined,
       }
     },
     props: {
@@ -148,8 +154,11 @@ export default {
         reveal: function (cell) {
             if (this.gameOver || cell.visible || cell.flagged) return;
 
-            if (cell.value == -1)
+            // Start game
+            if (cell.value == -1) {
                 this.plantMines(cell.index);
+                this.startTimer();
+            }
 
             cell.flagged = false;
             cell.visible = true;
@@ -168,12 +177,18 @@ export default {
                     }, randomInt (500, 7500)));
 
                 this.gameOver = true;
+                this.stopTimer();
                 return;
             }
 
             if (cell.value == 0) {
                 getSurroundings(this.cells, cell.index, this.width, this.size)
                     .forEach(c => this.reveal(c));
+            }
+
+            if (this.cells.filter(c => !c.visible).length == this.mines) {
+                this.success = true;
+                this.stopTimer();
             }
         },
         revealSurroundings: function (cell) {
@@ -218,6 +233,7 @@ export default {
 
             this.highlightEnabled = false;
             this.gameOver = false;
+            this.success = false;
             this.minesLeft = this.mines;
             this.cells = [];
 
@@ -231,6 +247,16 @@ export default {
                     visible: false
                 });
             }
+
+            this.stopTimer();
+            this.time = 0;
+        },
+        startTimer: function() {
+            this.timeTimerId = setInterval(() => this.time++, 1000);
+        },
+        stopTimer: function() {
+            clearTimeout(this.timeTimerId);
+            this.timeTimerId = undefined;
         },
         menu: function () {
             this.reset();
