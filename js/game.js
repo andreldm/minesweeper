@@ -174,7 +174,7 @@ export default {
                         c.flagged = false;
                         c.visible = true;
                         explode(grid.childNodes[c.index]);
-                    }, randomInt (500, 7500)));
+                    }, randomInt (500, 4000)));
 
                 this.gameOver = true;
                 this.stopTimer();
