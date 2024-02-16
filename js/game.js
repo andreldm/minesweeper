@@ -26,7 +26,7 @@ const TEMPLATE = `
 </div>
 <div class="controls">
     <div class="mine-counter" v-if="success">You won!</div>
-    <div class="mine-counter" v-if="gameOver">You lost!</div>
+    <div class="mine-counter" v-if="!success && gameOver">You lost!</div>
     <div class="mine-counter" v-if="!success && !gameOver">{{ Math.max(minesLeft, 0) }} mine{{ minesLeft == 1 ? '' : 's' }} left</div>
     <div class="time">{{ time }}</div>
     <div>
@@ -187,7 +187,9 @@ export default {
             }
 
             if (this.cells.filter(c => !c.visible).length == this.mines) {
+                this.cells.filter(c => c.value == 'X').forEach(c => c.flagged = true);
                 this.success = true;
+                this.gameOver = true;
                 this.stopTimer();
             }
         },
