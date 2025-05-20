@@ -3,6 +3,11 @@ body {
     font-family: "helvetica neue", arial, system;
 }
 
+/* Hide scrollbars */
+html { scrollbar-width: none; } /* Firefox */
+body { -ms-overflow-style: none; } /* IE and Edge */
+body::-webkit-scrollbar, body::-webkit-scrollbar-button { display: none; } /* Chrome */
+
 #instructions {
     display: none;
     height: 100vh;
